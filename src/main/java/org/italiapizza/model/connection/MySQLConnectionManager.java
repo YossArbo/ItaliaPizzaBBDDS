@@ -84,4 +84,8 @@ public class MySQLConnectionManager {
             connection.close();
         }
     }
+    
+    public Connection getConnection() {
+        return this.connection;
+    }
 }
