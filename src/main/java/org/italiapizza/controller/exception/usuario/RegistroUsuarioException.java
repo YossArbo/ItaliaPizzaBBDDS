@@ -2,17 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.italiapizza.controller.exception;
+package org.italiapizza.controller.exception.usuario;
 
-/**
- * @author Yoss
- */
-public class UsuarioException extends RuntimeException {
-    public UsuarioException(String message) {
+public class RegistroUsuarioException extends UsuarioException {
+    
+    public RegistroUsuarioException(String message) {
         super(message);
     }
     
-    public UsuarioException(String message, Throwable cause) {
+    public RegistroUsuarioException(String message, Throwable cause) {
         super(message, cause);
     }
     
