@@ -63,9 +63,7 @@ public class Cliente extends Usuario {
         this.ciudad = ciudad;
         this.codigoPostal = codigoPostal;
     }
-    
-    // ========== Getters, Setters y Utilidades ==========
-    
+        
     public String getCalle() { return calle; }
     public void setCalle(String calle) { this.calle = calle; }
     
