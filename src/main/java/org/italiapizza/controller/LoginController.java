@@ -4,7 +4,7 @@
  */
 package org.italiapizza.controller;
 
-import org.italiapizza.controller.exception.LoginException;
+import org.italiapizza.controller.exception.usuario.LoginException;
 import org.italiapizza.model.dao.UsuarioDAO;
 import org.italiapizza.model.dto.Empleado;
 

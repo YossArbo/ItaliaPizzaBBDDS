@@ -1,8 +1,8 @@
 package org.italiapizza.model.dao;
 
-import org.italiapizza.controller.exception.EliminacionUsuarioException;
-import org.italiapizza.controller.exception.LoginException;
-import org.italiapizza.controller.exception.RegistroUsuarioException;
+import org.italiapizza.controller.exception.usuario.EliminacionUsuarioException;
+import org.italiapizza.controller.exception.usuario.LoginException;
+import org.italiapizza.controller.exception.usuario.RegistroUsuarioException;
 import org.italiapizza.model.connection.MySQLConnectionManager;
 import org.italiapizza.model.dto.Cliente;
 import org.italiapizza.model.dto.Empleado;

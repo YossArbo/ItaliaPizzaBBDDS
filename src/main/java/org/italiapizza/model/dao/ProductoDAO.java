@@ -4,8 +4,8 @@
  */
 package org.italiapizza.model.dao;
 
-import org.italiapizza.controller.exception.EliminacionProductoException;
-import org.italiapizza.controller.exception.RegistroProductoException;
+import org.italiapizza.controller.exception.producto.EliminacionProductoException;
+import org.italiapizza.controller.exception.producto.RegistroProductoException;
 import org.italiapizza.model.connection.MySQLConnectionManager;
 import org.italiapizza.model.dto.Producto;
 

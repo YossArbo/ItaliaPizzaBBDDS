@@ -4,7 +4,7 @@
  */
 package org.italiapizza.model.dao;
 
-import org.italiapizza.controller.exception.InventarioException;
+import org.italiapizza.controller.exception.inventario.InventarioException;
 import org.italiapizza.model.connection.MySQLConnectionManager;
 import org.italiapizza.model.dto.Inventario;
 import java.sql.*;

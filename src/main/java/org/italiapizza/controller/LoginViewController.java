@@ -1,6 +1,6 @@
 package org.italiapizza.controller;
 
-import org.italiapizza.controller.exception.LoginException;
+import org.italiapizza.controller.exception.usuario.LoginException;
 import org.italiapizza.model.dto.Empleado;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
