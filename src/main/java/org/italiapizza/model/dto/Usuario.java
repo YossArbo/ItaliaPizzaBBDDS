@@ -17,22 +17,10 @@ public class Usuario {
     private int estatus; // 1 = activo, 0 = inactivo
     private String tipoUsuario; // "Cliente" o "Empleado"
     
-    /**
-     * Constructor vacío para instanciación genérica.
-     */
     public Usuario() {
         this.estatus = 1; // Activo por defecto
     }
     
-    /**
-     * Constructor con parámetros principales.
-     * 
-     * @param nombres nombres del usuario
-     * @param apellidos apellidos del usuario
-     * @param telefono teléfono del usuario
-     * @param email email del usuario
-     * @param tipoUsuario tipo de usuario ("Cliente" o "Empleado")
-     */
     public Usuario(String nombres, String apellidos, String telefono, String email, String tipoUsuario) {
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -42,9 +30,6 @@ public class Usuario {
         this.estatus = 1;
     }
     
-    /**
-     * Constructor con todos los parámetros.
-     */
     public Usuario(int idUsuario, String nombres, String apellidos, String telefono, 
                    String email, int estatus, String tipoUsuario) {
         this.idUsuario = idUsuario;
@@ -114,20 +99,10 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
     
-    /**
-     * Obtiene el nombre completo del usuario.
-     * 
-     * @return nombre completo (nombres + apellidos)
-     */
     public String getNombreCompleto() {
         return nombres + " " + apellidos;
     }
     
-    /**
-     * Verifica si el usuario está activo.
-     * 
-     * @return true si estatus es 1, false en caso contrario
-     */
     public boolean estaActivo() {
         return estatus == 1;
     }
