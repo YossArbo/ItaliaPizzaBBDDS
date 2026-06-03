@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.italiapizza.controller.LoginViewController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
@@ -24,12 +23,12 @@
                   <Font name="Elephant" size="45.0" />
                </font>
             </Label>
-            <TextField fx:id="textFieldUsuario" prefHeight="50.0" promptText="USUARIO" style="-fx-background-color: #ae8672; -fx-text-fill: white; -fx-prompt-text-fill: white;">
+            <TextField fx:id="textFieldUsuario" prefHeight="50.0" promptText="Usuario" style="-fx-background-color: #ae8672; -fx-text-fill: white; -fx-prompt-text-fill: white;">
                <font>
                   <Font size="22.0" />
                </font>
             </TextField>
-            <TextField fx:id="textFieldContrasenia" prefHeight="50.0" promptText="CONTRASEÑA" style="-fx-background-color: #ae8672; -fx-text-fill: white; -fx-prompt-text-fill: white;">
+            <TextField fx:id="textFieldContrasenia" prefHeight="50.0" promptText="Contraseña" style="-fx-background-color: #ae8672; -fx-text-fill: white; -fx-prompt-text-fill: white;">
                <font>
                   <Font size="22.0" />
                </font>
