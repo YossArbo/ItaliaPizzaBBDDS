@@ -6,7 +6,10 @@ package org.italiapizza.controller.viewController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -14,6 +17,13 @@ import javafx.fxml.Initializable;
  * @author ELLIN JV
  */
 public class UsuariosViewController implements Initializable {
+
+    @FXML
+    private Label labelRegistrar;
+    @FXML
+    private Button buttonEmpleado;
+    @FXML
+    private Button buttonCliente;
 
     /**
      * Initializes the controller class.
