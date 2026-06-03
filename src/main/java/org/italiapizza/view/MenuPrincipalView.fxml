@@ -13,29 +13,28 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/26" fx:controller="org.italiapizza.controller.MenuPrincipalViewController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.italiapizza.controller.viewController.MenuPrincipalViewController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../utils/images/imagenpizzas.jpeg" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" layoutX="50.0" layoutY="43.0" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: rgba(0, 0, 0, 0.4); -fx-padding: 100; -fx-spacing: 40;">
+      <VBox alignment="CENTER" layoutX="50.0" layoutY="43.0" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: rgba(0, 0, 0, 0.4); -fx-padding: 100; -fx-spacing: 30;">
          <children>
             <Label fx:id="labelMenuPrincipal" text="Menú" textFill="WHITE">
                <font>
                   <Font name="Elephant" size="45.0" />
                </font>
             </Label>
-            <GridPane alignment="CENTER" prefWidth="400.0">
+            <GridPane alignment="CENTER" prefHeight="144.0" prefWidth="600.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="344.39996337890625" minWidth="10.0" prefWidth="200.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="285.20001220703125" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="60.8" minHeight="100.0" prefHeight="41.599981689453124" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="25.60001220703125" minHeight="100.0" prefHeight="19.200018310546874" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="120.8" minHeight="76.79998779296875" prefHeight="83.99998168945312" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="123.20001220703125" minHeight="56.000000000000014" prefHeight="92.80001831054689" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Button fx:id="buttonAdmin" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: grey;" text="Administración" textFill="WHITE">
@@ -88,6 +87,11 @@
                   </Button>
                </children>
             </GridPane>
+            <Button fx:id="buttonCerrarSesión" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="125.0" style="-fx-background-color: #6e2a44;" text="Cerrar Sesión" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
    </children>

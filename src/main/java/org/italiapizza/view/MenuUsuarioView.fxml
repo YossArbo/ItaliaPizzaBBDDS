@@ -18,7 +18,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.italiapizza.controller.viewController.InventarioViewController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.italiapizza.controller.viewController.MenuUsuarioViewController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -27,7 +27,7 @@
       </ImageView>
       <VBox alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: rgba(0, 0, 0, 0.4); -fx-padding: 5; -fx-spacing: 10;">
          <children>
-            <Label fx:id="labelConsultarUsuario" alignment="CENTER" text="Inventario" textFill="WHITE">
+            <Label fx:id="labelConsultarUsuario" alignment="CENTER" text="Consultar Usuario" textFill="WHITE">
                <font>
                   <Font name="Elephant" size="36.0" />
                </font>
@@ -39,19 +39,35 @@
                   </DropShadow>
                </effect>
             </Label>
-            <GridPane prefHeight="317.0" prefWidth="790.0" style="-fx-padding: 10; -fx-hgap: 10; -fx-vgap: 10; -fx-spacing: 10;">
+            <GridPane prefHeight="274.0" prefWidth="790.0" style="-fx-padding: 10; -fx-hgap: 10; -fx-vgap: 10; -fx-spacing: 10;">
                <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="700.0" minWidth="10.0" prefWidth="617.6000122070312" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="375.5999755859375" minWidth="0.0" prefWidth="141.59998779296882" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="700.0" minWidth="10.0" prefWidth="543.3999633789062" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="375.5999755859375" minWidth="0.0" prefWidth="224.20003662109377" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="36.79998779296875" minHeight="25.5999755859375" prefHeight="30.399993896484375" />
-                  <RowConstraints maxHeight="221.0000244140625" minHeight="10.0" prefHeight="600.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="221.0000244140625" minHeight="10.0" prefHeight="216.20000610351562" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <VBox alignment="CENTER" prefHeight="282.0" prefWidth="142.0" style="-fx-spacing: 50;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <VBox prefHeight="249.0" prefWidth="488.0" style="-fx-spacing: 2;" GridPane.rowIndex="1">
                      <children>
-                        <Button fx:id="buttonEditar" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #ae8672;" text="Editar" textFill="WHITE">
+                        <ScrollPane prefHeight="255.0" prefWidth="542.0" style="-fx-background-color: white;">
+                           <content>
+                              <TableView prefHeight="258.0" prefWidth="524.0" style="-fx-background-color: white;">
+                                <columns>
+                                  <TableColumn fx:id="tableColumnNombreCompleto" prefWidth="155.99999231100082" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Nombre Completo" />
+                                  <TableColumn fx:id="tableColumnTelefono" minWidth="8.799957275390625" prefWidth="116.00003051757812" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Teléfono" />
+                                    <TableColumn fx:id="tableColumnEmail" prefWidth="160.0" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="E-mail" />
+                                    <TableColumn fx:id="tableColumnTipoUsuario" minWidth="0.0" prefWidth="100.79998779296875" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Tipo" />
+                                </columns>
+                              </TableView>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="185.0" prefWidth="230.0" style="-fx-spacing: 50;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Button fx:id="buttonEditar" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #ae8672;" text="Editar" textFill="WHITE">
                            <effect>
                               <DropShadow>
                                  <color>
@@ -63,7 +79,7 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonEliminar" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: ac2020;" text="Eliminar" textFill="WHITE">
+                        <Button fx:id="buttonEliminar" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: ac2020;" text="Eliminar" textFill="WHITE">
                            <effect>
                               <DropShadow>
                                  <color>
@@ -73,18 +89,6 @@
                            </effect>
                            <font>
                               <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="buttonExportar" mnemonicParsing="false" prefHeight="34.0" prefWidth="115.0" style="-fx-background-color: grey;" text="Exportar CSV" textFill="WHITE">
-                           <effect>
-                              <DropShadow>
-                                 <color>
-                                    <Color red="0.31578946113586426" green="0.10526315867900848" blue="0.10526315867900848" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                           <font>
-                              <Font name="System Bold" size="14.0" />
                            </font>
                         </Button>
                      </children>
@@ -96,26 +100,12 @@
                         </DropShadow>
                      </effect>
                   </VBox>
-                  <TextField fx:id="textFieldBuscadorProducto" prefHeight="40.0" prefWidth="100.0" promptText="Código / Nombre" style="-fx-background-color: #ae8672; -fx-text-fill: white; -fx-prompt-text-fill: white; -fx-background-radius: 5;">
+                  <TextField fx:id="textFieldBuscadorUsuario" prefHeight="40.0" prefWidth="100.0" promptText="Nombre/Teléfono/Email" style="-fx-background-color: #ae8672; -fx-text-fill: white; -fx-prompt-text-fill: white; -fx-background-radius: 5;">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </TextField>
-                  <ScrollPane prefHeight="259.0" prefWidth="618.0" style="-fx-background-color: white;" GridPane.rowIndex="1">
-                     <content>
-                        <TableView prefHeight="258.0" prefWidth="671.0" style="-fx-background-color: white;">
-                           <columns>
-                              <TableColumn fx:id="tableColumnCodigo" prefWidth="72.80000323057175" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Código" />
-                              <TableColumn fx:id="tableColumnNombre" minWidth="8.799957275390625" prefWidth="135.19995880126953" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Nombre Producto" />
-                              <TableColumn fx:id="tableColumnDescripcion" prefWidth="179.99996948242188" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Descripción" />
-                              <TableColumn fx:id="tableColumnPrecio" minWidth="0.0" prefWidth="56.799957275390625" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Precio" />
-                              <TableColumn fx:id="tableColumnRestricciones" prefWidth="184.79995727539062" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Restricciones" />
-                              <TableColumn fx:id="tableColumnUnidadMedida" prefWidth="184.79995727539062" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Unidad Medida" />
-                           </columns>
-                        </TableView>
-                     </content>
-                  </ScrollPane>
-                  <Button fx:id="buttonNuevoProducto" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: grey;" text="+Nuevo Producto" textFill="WHITE" GridPane.columnIndex="1">
+                  <Button fx:id="buttonNuevoUsuario" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: grey;" text="+ Nuevo Usuario" textFill="WHITE" GridPane.columnIndex="1">
                      <effect>
                         <DropShadow>
                            <color>
@@ -124,7 +114,7 @@
                         </DropShadow>
                      </effect>
                      <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
                </children>

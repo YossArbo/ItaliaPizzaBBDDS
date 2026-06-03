@@ -1,11 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.italiapizza.controller.RegistroPedidoController">
-    
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.italiapizza.controller.viewController.RegistroPedidoViewController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../utils/images/imagenpizzas.jpeg" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: rgba(0, 0, 0, 0.4); -fx-padding: 50; -fx-spacing: 40;">
+         <children>
+            <Label fx:id="labelRegistroPedido" alignment="CENTER" prefHeight="44.0" prefWidth="474.0" text="Registro de Pedido" textFill="WHITE">
+               <font>
+                  <Font name="Elephant" size="36.0" />
+               </font>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.24210526049137115" green="0.11217544227838516" blue="0.05649122968316078" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Label>
+            <GridPane alignment="CENTER_RIGHT" prefHeight="276.0" prefWidth="699.0" style="-fx-padding: 2 2 2 2; -fx-hgap: 7;">
+               <columnConstraints>
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="700.0" minWidth="10.0" prefWidth="499.2000244140625" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="375.5999755859375" minWidth="0.0" prefWidth="185.5999755859375" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="211.59998779296876" minHeight="10.0" prefHeight="210.8" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="39.999975585937506" minHeight="10.0" prefHeight="28.0" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <VBox prefHeight="236.0" prefWidth="502.0" style="-fx-spacing: 5;">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <ComboBox fx:id="comboBoxProductos" prefHeight="40.0" prefWidth="400.0" promptText="Producto" style="-fx-font-size: 14; -fx-background-color: #ffe8dd;" visibleRowCount="15" />
+                              <TextField fx:id="textFieldCantidad" prefHeight="40.0" prefWidth="143.0" promptText="Cantidad">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <Button fx:id="buttonAgregarProducto" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="190.0" style="-fx-background-color: grey;" text="Agregar otro producto" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Button>
+                        <ComboBox fx:id="comboBoxClientes" prefHeight="37.0" prefWidth="379.0" promptText="Cliente" style="-fx-font-size: 14; -fx-background-color: #ffe8dd;" />
+                        <ComboBox fx:id="comboBoxCajero" prefHeight="37.0" prefWidth="380.0" promptText="Cajero" style="-fx-font-size: 14; -fx-background-color: #ffe8dd;" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="vBoxVistaCliente" alignment="TOP_CENTER" prefHeight="241.0" prefWidth="187.0" style="-fx-background-color: #ffe8dd; -fx-background-radius: 5; -fx-padding: 15 2 2 2; -fx-spacing: 0.50;" GridPane.columnIndex="1">
+                     <children>
+                        <Label fx:id="labelCliente" text="Pedido">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelTelefonos" alignment="CENTER" prefHeight="18.0" prefWidth="271.0" text="Productos" textFill="#360909">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <VBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="187.0" style="-fx-spacing: 1;">
+                           <children>
+                              <HBox alignment="CENTER" style="-fx-spacing: 5;">
+                                 <children>
+                                    <Label fx:id="labelNombreProducto1" text="Nombre Producto" textFill="#360909" />
+                                    <Spinner fx:id="spinnerCantidad" prefHeight="26.0" prefWidth="50.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="187.0" style="-fx-spacing: 1;">
+                           <children>
+                              <HBox alignment="CENTER" style="-fx-spacing: 5;" />
+                           </children>
+                        </VBox>
+                     </children>
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.21052631735801697" green="0.02573099359869957" blue="0.02573099359869957" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </VBox>
+                  <Label fx:id="labelTotalAPagar" text="Total a Pagar" textFill="WHITE" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Segoe UI Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldTotalAPagar" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <HBox prefHeight="26.0" prefWidth="699.0" style="-fx-spacing: 450;">
+               <children>
+                  <Button fx:id="buttonCancelar" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="125.0" style="-fx-background-color: #6e2a44;" text="Cancelar" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="buttonRegistrar" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="125.0" style="-fx-background-color: grey;" text="Registrar" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

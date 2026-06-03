@@ -1,12 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package org.italiapizza.controller.viewController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -14,6 +14,21 @@ import javafx.fxml.Initializable;
  * @author ELLIN JV
  */
 public class BitacoraPedidoViewController implements Initializable {
+
+    @FXML
+    private Label labelBitacora;
+    @FXML
+    private ComboBox<?> comboBoxPedidos;
+    @FXML
+    private Label labelEnProceso;
+    @FXML
+    private Label labelEntregado;
+    @FXML
+    private Label labelCancelado;
+    @FXML
+    private Button buttonVolverAlMenu;
+    @FXML
+    private Button buttonRegresar;
 
     /**
      * Initializes the controller class.

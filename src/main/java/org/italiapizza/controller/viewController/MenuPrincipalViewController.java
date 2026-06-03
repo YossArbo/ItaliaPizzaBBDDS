@@ -1,12 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package org.italiapizza.controller.viewController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -14,6 +13,19 @@ import javafx.fxml.Initializable;
  * @author ELLIN JV
  */
 public class MenuPrincipalViewController implements Initializable {
+
+    @FXML
+    private Label labelMenuPrincipal;
+    @FXML
+    private Button buttonAdmin;
+    @FXML
+    private Button buttonPedidos;
+    @FXML
+    private Button buttonInventarios;
+    @FXML
+    private Button buttonAyuda;
+    @FXML
+    private Button buttonCerrarSesión;
 
     /**
      * Initializes the controller class.
