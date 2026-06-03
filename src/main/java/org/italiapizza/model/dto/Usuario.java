@@ -15,7 +15,7 @@ public class Usuario {
     private String telefono;
     private String email;
     private int estatus; // 1 = activo, 0 = inactivo
-    private String tipoUsuario; // "Cliente" o "Empleado"
+    protected String tipoUsuario; // "Cliente" o "Empleado"
     
     public Usuario() {
         this.estatus = 1; // Activo por defecto
