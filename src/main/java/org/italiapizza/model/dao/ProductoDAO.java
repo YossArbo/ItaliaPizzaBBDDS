@@ -206,4 +206,32 @@ public class ProductoDAO {
         }
         return productos;
     }
+    
+    public List<Producto> listarMenu() throws RegistroProductoException {
+        List<Producto> menu = new ArrayList<>();
+        String sql = "SELECT id_producto, codigo, nombre, descripcion, precio FROM vw_menu_productos";
+        
+        MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
+        try {
+            conn.connectionAdmin();
+            try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Producto p = new Producto();
+                    p.setIdProducto(rs.getInt("id_producto"));
+                    p.setCodigo(rs.getString("codigo"));
+                    p.setNombre(rs.getString("nombre"));
+                    p.setDescripcion(rs.getString("descripcion"));
+                    p.setPrecio(rs.getDouble("precio"));
+                    p.setEstatus(1);
+                    
+                    menu.add(p);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RegistroProductoException("Error al cargar el menú de ventas: " + e.getMessage(), e);
+        } finally {
+            try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+        return menu;
+    }
 }

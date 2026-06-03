@@ -50,9 +50,7 @@ public class Empleado extends Usuario {
         this.nombreUsuario = nombreUsuario;
         this.rol = rol;
     }
-    
-    // ========== Getters y Setters ==========
-    
+        
     public String getNombreUsuario() {
         return nombreUsuario;
     }
