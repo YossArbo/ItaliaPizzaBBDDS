@@ -56,6 +56,16 @@ public class Producto {
         this.estatus = 1;
     }
 
+    public Producto(String codigo, String nombre, String descripcion, double precio,
+            String restriccion, String unidadMedida) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.restriccion = restriccion;
+        this.unidadMedida = unidadMedida;
+    }
+    
     public Producto(int idProducto, String codigo, String nombre, String descripcion,
                     double precio, String restriccion, String foto, String tipoProducto,
                     int estatus, String unidadMedida, double contenido) {
