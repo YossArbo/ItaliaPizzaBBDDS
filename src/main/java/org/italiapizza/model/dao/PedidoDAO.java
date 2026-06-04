@@ -140,6 +140,14 @@ public class PedidoDAO {
         }
     }
     
+    /**
+     * Buscar por fecha, estatus o usuarios
+     * @param idCliente
+     * @param fecha
+     * @param estatus
+     * @return
+     * @throws PedidoException 
+     */
     public List<Pedido> buscarPedidos(Integer idCliente, String fecha, String estatus) throws PedidoException {
         List<Pedido> lista = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM pedido WHERE 1=1 ");
@@ -154,7 +162,7 @@ public class PedidoDAO {
             parametros.add(fecha);
         }
         if (estatus != null && !estatus.trim().isEmpty()) {
-            sql.append("AND estatus = ? ");
+            sql.append("AND LOWER(estatus) = LOWER(?) ");
             parametros.add(estatus);
         }
 
@@ -179,41 +187,6 @@ public class PedidoDAO {
         return lista;
     }
     
-    public List<Pedido> buscarPorFecha(LocalDate inicio, LocalDate fin) throws PedidoException {
-        if (inicio == null || fin == null) {
-            throw new PedidoException("Las fechas no pueden estar vacías");
-        }
-        if (fin.isBefore(inicio)) {
-           throw new PedidoException("La fecha final no puede ser anterior a la inicial");
-        }
-
-        List<Pedido> lista = new ArrayList<>();
-        MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
-        try {
-            conn.conectarSegunUsuarioActivo();
-            
-            String sql = "SELECT id_pedido, fecha_pedido, monto_total, estatus, id_cliente, id_empleado " +
-                         "FROM pedido WHERE fecha_pedido >= ? AND fecha_pedido < ? " +
-                         "ORDER BY fecha_pedido DESC";
-
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setTimestamp(1, Timestamp.valueOf(inicio.atStartOfDay()));
-                ps.setTimestamp(2, Timestamp.valueOf(fin.plusDays(1).atStartOfDay()));
-            
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                     lista.add(mapearPedido(rs));
-                    }
-                }   
-            }
-        } catch (SQLException e) {
-            throw new PedidoException("Error al buscar pedidos por fecha: " + e.getMessage(), e);
-        } finally {
-            try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
-        }
-        return lista;
-    }
-
     private List<DetallePedido> obtenerDetalles(MySQLConnectionManager conn, int idPedido) throws SQLException {
         String sql = "SELECT dp.*, p.nombre FROM detalle_pedido dp JOIN producto p ON dp.id_producto = p.id_producto WHERE dp.id_pedido = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
