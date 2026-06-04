@@ -51,7 +51,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="282.0" prefWidth="142.0" style="-fx-spacing: 50;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Button fx:id="buttonEditar" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #ae8672;" text="Editar" textFill="WHITE">
+                        <Button fx:id="buttonEditar" mnemonicParsing="false" onAction="#abrirModalEditarProducto" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #ae8672;" text="Editar" textFill="WHITE">
                            <effect>
                               <DropShadow>
                                  <color>
@@ -115,7 +115,7 @@
                         </TableView>
                      </content>
                   </ScrollPane>
-                  <Button fx:id="buttonNuevoProducto" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: grey;" text="+Nuevo Producto" textFill="WHITE" GridPane.columnIndex="1">
+                  <Button fx:id="buttonNuevoProducto" mnemonicParsing="false" onAction="#abrirModalNuevoProducto" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: grey;" text="+Nuevo Producto" textFill="WHITE" GridPane.columnIndex="1">
                      <effect>
                         <DropShadow>
                            <color>

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package org.italiapizza.controller.viewController;
 
 import java.net.URL;
@@ -14,12 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import org.italiapizza.utils.WindowManager;
 
-/**
- * FXML Controller class
- *
- * @author ELLIN JV
- */
 public class PedidosViewController implements Initializable {
 
     @FXML
@@ -35,7 +27,7 @@ public class PedidosViewController implements Initializable {
     @FXML
     private TextField textFieldFecha;
     @FXML
-    private ComboBox<?> comboBoxEstatus;
+    private ComboBox<String> comboBoxEstatus;
     @FXML
     private TableView<?> tableViewPedidos;
     @FXML
@@ -57,12 +49,11 @@ public class PedidosViewController implements Initializable {
     @FXML
     private Button buttonRegresar;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        comboBoxEstatus.getItems().addAll("Entregado", "En Proceso", "Cancelado");
+
+        buttonRegresar.setOnAction(e -> WindowManager.cambiarVista(e, "/org/italiapizza/view/MenuPrincipal.fxml", "Menú Principal"));
+        buttonVolverAlMenu.setOnAction(e -> WindowManager.cambiarVista(e, "/org/italiapizza/view/MenuPrincipal.fxml", "Menú Principal"));
+    }
 }

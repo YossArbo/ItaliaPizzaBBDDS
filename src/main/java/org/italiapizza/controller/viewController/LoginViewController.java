@@ -2,18 +2,19 @@ package org.italiapizza.controller.viewController;
 
 import org.italiapizza.controller.exception.usuario.LoginException;
 import org.italiapizza.model.dto.Empleado;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.italiapizza.controller.LoginController;
+import org.italiapizza.utils.AlertManager;
+import org.italiapizza.utils.SessionManager;
+import org.italiapizza.utils.WindowManager;
 
-/**
- * FXML Controller class
- *
- * @author ELLIN JV
- */
+
+
 public class LoginViewController {
 
     @FXML
@@ -22,29 +23,23 @@ public class LoginViewController {
     private PasswordField textFieldContrasenia;
     @FXML
     private Button buttonLogin;
-    
+
     private final LoginController loginController = new LoginController();
 
     @FXML
-    private void handleLoginAction() {
+    private void handleLoginAction(ActionEvent event) {
         String usuario = textFieldUsuario.getText();
         String pass = textFieldContrasenia.getText();
         
         try {
             Empleado empleado = loginController.autenticar(usuario, pass);
-            
-            mostrarAlerta("Éxito", "Bienvenido, " + empleado.getNombres(), Alert.AlertType.INFORMATION);
-                        
+            SessionManager.setEmpleadoActual(empleado);
+            AlertManager.mostrarAlerta("Éxito", "Bienvenido, " + empleado.getNombres(), Alert.AlertType.INFORMATION);
+            WindowManager.cambiarVista(event, "/org/italiapizza/view/MenuPrincipalView.fxml", "Menú Principal");
         } catch (LoginException e) {
-            mostrarAlerta("Error de Acceso", e.getMessage(), Alert.AlertType.ERROR);
-        }
-    }    
-        
-    private void mostrarAlerta(String titulo, String contenido, Alert.AlertType tipo) {
-            Alert alert = new Alert(tipo);
-            alert.setTitle(titulo);
-            alert.setHeaderText(null);
-            alert.setContentText(contenido);
-            alert.showAndWait();
+            AlertManager.mostrarAlerta("Error de Acceso", e.getMessage(), Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            AlertManager.mostrarAlerta("Error del Sistema", "Ha ocurrido un error inesperado.", Alert.AlertType.ERROR);
         }
     }
+}

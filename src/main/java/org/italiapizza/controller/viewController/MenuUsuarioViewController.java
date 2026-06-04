@@ -1,35 +1,39 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package org.italiapizza.controller.viewController;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import org.italiapizza.model.dao.UsuarioDAO;
+import org.italiapizza.model.dto.Usuario;
+import org.italiapizza.utils.AlertManager;
+import org.italiapizza.utils.SessionManager;
+import org.italiapizza.utils.WindowManager;
 
-/**
- * FXML Controller class
- *
- * @author ELLIN JV
- */
 public class MenuUsuarioViewController implements Initializable {
 
     @FXML
     private Label labelConsultarUsuario;
     @FXML
-    private TableColumn<?, ?> tableColumnNombreCompleto;
+    private TableView<Usuario> tableViewUsuarios;
     @FXML
-    private TableColumn<?, ?> tableColumnTelefono;
+    private TableColumn<Usuario, String> tableColumnNombreCompleto;
     @FXML
-    private TableColumn<?, ?> tableColumnEmail;
+    private TableColumn<Usuario, String> tableColumnTelefono;
     @FXML
-    private TableColumn<?, ?> tableColumnTipoUsuario;
+    private TableColumn<Usuario, String> tableColumnEmail;
+    @FXML
+    private TableColumn<Usuario, String> tableColumnTipoUsuario;
     @FXML
     private Button buttonEditar;
     @FXML
@@ -43,12 +47,57 @@ public class MenuUsuarioViewController implements Initializable {
     @FXML
     private Button buttonRegresar;
 
-    /**
-     * Initializes the controller class.
-     */
+    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private ObservableList<Usuario> usuariosObservable;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        configurarColumnas();
+        cargarUsuarios("");
+
+        textFieldBuscadorUsuario.textProperty().addListener((obs, oldText, newText) -> cargarUsuarios(newText));
+
+        buttonNuevoUsuario.setOnAction(e -> abrirModalNuevoUsuario());
+        buttonEliminar.setOnAction(e -> eliminarUsuario());
+        buttonRegresar.setOnAction(e -> WindowManager.cambiarVista(e, "/org/italiapizza/view/Administracion.fxml", "Administración"));
+        buttonVolverAlMenu.setOnAction(e -> WindowManager.cambiarVista(e, "/org/italiapizza/view/MenuPrincipal.fxml", "Menú Principal"));
+    }
+
+    private void configurarColumnas() {
+        tableColumnNombreCompleto.setCellValueFactory(new PropertyValueFactory<>("nombres"));
+        tableColumnTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        tableColumnTipoUsuario.setCellValueFactory(new PropertyValueFactory<>("tipoUsuario"));
+    }
+
+    private void cargarUsuarios(String busqueda) {
+        try {
+            List<Usuario> lista = usuarioDAO.buscarPorNombre(busqueda);
+            usuariosObservable = FXCollections.observableArrayList(lista);
+            tableViewUsuarios.setItems(usuariosObservable);
+        } catch (Exception e) {
+            AlertManager.mostrarAlerta("Error", "No se pudo cargar la lista de usuarios.", Alert.AlertType.ERROR);
+        }
+    }
+
+    private void abrirModalNuevoUsuario() {
+        WindowManager.abrirModal("/org/italiapizza/view/RegistroUsuario.fxml", "Registrar Usuario");
+        cargarUsuarios(textFieldBuscadorUsuario.getText());
+    }
+
+    private void eliminarUsuario() {
+        Usuario seleccionado = tableViewUsuarios.getSelectionModel().getSelectedItem();
+        if (seleccionado == null) {
+            AlertManager.mostrarAlerta("Advertencia", "Seleccione un usuario para eliminar.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        try {
+            usuarioDAO.eliminarUsuario(seleccionado.getIdUsuario(), SessionManager.getEmpleadoActual().getIdUsuario());
+            AlertManager.mostrarAlerta("Éxito", "Usuario eliminado correctamente.", Alert.AlertType.INFORMATION);
+            cargarUsuarios(textFieldBuscadorUsuario.getText());
+        } catch (Exception e) {
+            AlertManager.mostrarAlerta("Error", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
 }

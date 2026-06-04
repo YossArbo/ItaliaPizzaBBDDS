@@ -6,12 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import org.italiapizza.utils.WindowManager;
 
-/**
- * FXML Controller class
- *
- * @author ELLIN JV
- */
 public class AdministracionViewController implements Initializable {
 
     @FXML
@@ -27,12 +23,10 @@ public class AdministracionViewController implements Initializable {
     @FXML
     private Button buttonRegresar;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        buttonUsuarios.setOnAction(e -> WindowManager.cambiarVista(e, "/org/italiapizza/view/MenuUsuarioView.fxml", "Gestión de Usuarios"));
+        buttonProductos.setOnAction(e -> WindowManager.cambiarVista(e, "/org/italiapizza/view/InventarioView.fxml", "Gestión de Productos"));
+        buttonRegresar.setOnAction(e -> WindowManager.cambiarVista(e, "/org/italiapizza/view/MenuPrincipalView.fxml", "Menú Principal"));
+    }
 }
