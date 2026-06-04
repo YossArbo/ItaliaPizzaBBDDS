@@ -10,6 +10,7 @@ import org.italiapizza.controller.exception.pedido.PedidoException;
 import org.italiapizza.model.connection.MySQLConnectionManager;
 import org.italiapizza.model.dto.*;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -23,26 +24,38 @@ public class PedidoDAO {
     public PedidoDAO() {}
 
     public int registrarNuevoPedido(Integer idCliente, int idEmpleado, List<DetallePedido> detalles) 
-            throws RegistroPedidoException {
-
-        if (detalles == null || detalles.isEmpty()) throw new RegistroPedidoException("El pedido debe tener al menos un producto");
+        throws RegistroPedidoException {
+    
+        MySQLConnectionManager connManager = MySQLConnectionManager.getInstance();
+        Connection conexionDB = null; 
         
-        MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
         try {
-            conn.connectionAdmin();
-            conn.getConnection().setAutoCommit(false);
-
+            
+            connManager.conectarSegunUsuarioActivo();
+            conexionDB = connManager.getConnection();
+            conexionDB.setAutoCommit(false);
+        
+            if (detalles == null || detalles.isEmpty()) {
+                throw new RegistroPedidoException("El pedido debe tener al menos un producto");
+            }
+            
             int idPedido;
-            try (CallableStatement cs = conn.getConnection().prepareCall("{CALL sp_registrar_pedido(?, ?, ?)}")) {
-                if (idCliente != null) cs.setInt(1, idCliente); else cs.setNull(1, Types.INTEGER);
+            String sqlEncabezado = "{CALL sp_registrar_pedido(?, ?, ?)}";
+            try (CallableStatement cs = conexionDB.prepareCall(sqlEncabezado)) {
+                if (idCliente != null) {
+                    cs.setInt(1, idCliente); 
+                } else {
+                    cs.setNull(1, Types.INTEGER);
+                }
                 cs.setInt(2, idEmpleado);
                 cs.registerOutParameter(3, Types.INTEGER);
                 cs.execute();
                 idPedido = cs.getInt(3);
-            }
+        }
 
+        
             String sqlDetalle = "INSERT INTO detalle_pedido (id_pedido, id_producto, unidades, precio_unitario) VALUES (?, ?, ?, ?)";
-            try (PreparedStatement ps = conn.getConnection().prepareStatement(sqlDetalle)) {
+            try (PreparedStatement ps = conexionDB.prepareStatement(sqlDetalle)) {
                 for (DetallePedido d : detalles) {
                     ps.setInt(1, idPedido);
                     ps.setInt(2, d.getIdProducto());
@@ -53,22 +66,36 @@ public class PedidoDAO {
                 ps.executeBatch();
             }
 
-            conn.getConnection().commit();
+            String sqlBitacora = "INSERT INTO bitacora (estatus, id_pedido, id_empleado) VALUES (?, ?, ?)";
+            try (PreparedStatement psBitacora = conexionDB.prepareStatement(sqlBitacora)) {
+                psBitacora.setString(1, "En Proceso"); 
+                psBitacora.setInt(2, idPedido);
+                psBitacora.setInt(3, idEmpleado);
+                psBitacora.executeUpdate();
+            }
+            
+            conexionDB.commit();
             return idPedido;
+
         } catch (SQLException e) {
-            try { conn.getConnection().rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+            if (conexionDB != null) {
+                try { conexionDB.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+            }
             throw new RegistroPedidoException("Error en transacción: " + e.getMessage(), e);
         } finally {
-            try { conn.getConnection().setAutoCommit(true); conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+            if (conexionDB != null) {
+                try { conexionDB.setAutoCommit(true); } catch (SQLException e) { e.printStackTrace(); }
+            }
+            try { connManager.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
-    }
+    }   
 
     public void cambiarEstatus(int idPedido, String nuevoEstatus, int idEmpleadoCambio) throws CambioEstatusException {
         if (!ESTATUS_VALIDOS.contains(nuevoEstatus)) throw new CambioEstatusException("Estatus inválido");
 
         MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
         try {
-            conn.connectionAdmin();
+            conn.conectarSegunUsuarioActivo();
             conn.getConnection().setAutoCommit(false);
 
             try (PreparedStatement ps = conn.getConnection().prepareStatement("UPDATE pedido SET estatus = ? WHERE id_pedido = ?")) {
@@ -93,12 +120,10 @@ public class PedidoDAO {
         }
     }
 
-    // ========== MÉTODOS DE APOYO Y MAPEO ==========
-
     public Pedido obtenerPedidoPorId(int idPedido) throws PedidoException {
         MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
         try {
-            conn.connectionAdmin();
+            conn.conectarSegunUsuarioActivo();
             Pedido pedido = null;
             try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM pedido WHERE id_pedido = ?")) {
                 ps.setInt(1, idPedido);
@@ -113,6 +138,80 @@ public class PedidoDAO {
         } finally {
             try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
+    }
+    
+    public List<Pedido> buscarPedidos(Integer idCliente, String fecha, String estatus) throws PedidoException {
+        List<Pedido> lista = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM pedido WHERE 1=1 ");
+        List<Object> parametros = new ArrayList<>();
+
+        if (idCliente != null && idCliente > 0) {
+            sql.append("AND id_cliente = ? ");
+            parametros.add(idCliente);
+        }
+        if (fecha != null && !fecha.trim().isEmpty()) {
+            sql.append("AND DATE(fecha_pedido) = ? "); 
+            parametros.add(fecha);
+        }
+        if (estatus != null && !estatus.trim().isEmpty()) {
+            sql.append("AND estatus = ? ");
+            parametros.add(estatus);
+        }
+
+        MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
+        try {
+            conn.conectarSegunUsuarioActivo();
+            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                for (int i = 0; i < parametros.size(); i++) {
+                    ps.setObject(i + 1, parametros.get(i));
+                }
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        lista.add(mapearPedido(rs));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new PedidoException("Error al buscar pedidos: " + e.getMessage(), e);
+        } finally {
+            try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+        return lista;
+    }
+    
+    public List<Pedido> buscarPorFecha(LocalDate inicio, LocalDate fin) throws PedidoException {
+        if (inicio == null || fin == null) {
+            throw new PedidoException("Las fechas no pueden estar vacías");
+        }
+        if (fin.isBefore(inicio)) {
+           throw new PedidoException("La fecha final no puede ser anterior a la inicial");
+        }
+
+        List<Pedido> lista = new ArrayList<>();
+        MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
+        try {
+            conn.conectarSegunUsuarioActivo();
+            
+            String sql = "SELECT id_pedido, fecha_pedido, monto_total, estatus, id_cliente, id_empleado " +
+                         "FROM pedido WHERE fecha_pedido >= ? AND fecha_pedido < ? " +
+                         "ORDER BY fecha_pedido DESC";
+
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setTimestamp(1, Timestamp.valueOf(inicio.atStartOfDay()));
+                ps.setTimestamp(2, Timestamp.valueOf(fin.plusDays(1).atStartOfDay()));
+            
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                     lista.add(mapearPedido(rs));
+                    }
+                }   
+            }
+        } catch (SQLException e) {
+            throw new PedidoException("Error al buscar pedidos por fecha: " + e.getMessage(), e);
+        } finally {
+            try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+        return lista;
     }
 
     private List<DetallePedido> obtenerDetalles(MySQLConnectionManager conn, int idPedido) throws SQLException {
@@ -137,5 +236,83 @@ public class PedidoDAO {
         return new Pedido(rs.getInt("id_pedido"), ts != null ? ts.toLocalDateTime() : null,
                 rs.getDouble("monto_total"), rs.getString("estatus"),
                 (Integer) rs.getObject("id_cliente"), rs.getInt("id_empleado"));
+    }
+    
+    
+    public void quitarProductoDePedido(int idPedido, int idProducto) throws PedidoException {
+        String sql = "DELETE FROM detalle_pedido WHERE id_pedido = ? AND id_producto =?";
+        MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
+        
+        try{
+            conn.conectarSegunUsuarioActivo();
+            
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, idPedido);
+                ps.setInt(2, idProducto);
+                
+                int filas = ps.executeUpdate();
+                if (filas == 0) {
+                    throw new PedidoException("El producto no esta registrado en este pedido.");
+                }
+            }
+        }catch (SQLException e) {
+            throw new PedidoException("Hubo un error al quitar el producto del pedido: " + e.getMessage(), e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public void agregarProductoAPedido(int idPedido, int idProducto, int unidades, double precioUnitario) throws PedidoException {
+        String sql = "INSERT INTO detalle_pedido (id_pedido, id_producto, unidades, precio_unitario) VALUES (?, ?, ?, ?)";
+        MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
+        
+        try {
+            conn.conectarSegunUsuarioActivo();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, idPedido);
+                ps.setInt(2, idProducto);
+                ps.setInt(3, unidades);
+                ps.setDouble(4, precioUnitario);
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new PedidoException("Error al agregar producto al pedido: " + e.getMessage(), e);
+        } finally {
+            try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+    }
+    
+    public List<BitacoraPedido> obtenerBitacora(int idPedido) throws PedidoException {
+        List<BitacoraPedido> historial = new ArrayList<>();
+        String sql = "SELECT b.estatus, b.fecha, u.nombre " + 
+                     "FROM bitacora b " +
+                     "INNER JOIN usuario u ON b.id_empleado = u.id_usuario " +
+                     "WHERE b.id_pedido = ? ORDER BY b.fecha DESC";
+        
+        MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
+        try {
+            conn.conectarSegunUsuarioActivo();
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, idPedido);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        BitacoraPedido bp = new BitacoraPedido();
+                        bp.setEstatus(rs.getString("estatus"));
+                        bp.setFecha(rs.getTimestamp("fecha").toString()); 
+                        bp.setNombreEmpleado(rs.getString("nombre"));
+                        historial.add(bp);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new PedidoException("Error al consultar bitácora: " + e.getMessage(), e);
+        } finally {
+            try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+        return historial;
     }
 }

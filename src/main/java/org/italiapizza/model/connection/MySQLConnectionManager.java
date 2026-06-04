@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import org.italiapizza.utils.sesionConnection.SesionGlobal;
 
 /**
  * 
@@ -73,12 +74,7 @@ public class MySQLConnectionManager {
     public PreparedStatement prepareStatement(String query) throws SQLException {
         return connection.prepareStatement(query);
     }
-    
-    
-    /**
-     * Cerrar conexion
-     * @throws SQLException 
-     */
+
     public void close() throws SQLException {
         if (connection != null && !connection.isClosed()) {
             connection.close();
@@ -87,5 +83,15 @@ public class MySQLConnectionManager {
     
     public Connection getConnection() {
         return this.connection;
+    }
+    
+    public void conectarSegunUsuarioActivo() throws SQLException {
+        String rolActual = SesionGlobal.getUsuarioActual().getTipoUsuario();
+        
+        if("Administrador".equalsIgnoreCase(rolActual)) {
+            this.connectionAdmin();
+        }else {
+            this.connectionCajero();
+        }
     }
 }

@@ -213,7 +213,7 @@ public class ProductoDAO {
         
         MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
         try {
-            conn.connectionAdmin();
+            conn.conectarSegunUsuarioActivo();
             try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Producto p = new Producto();
