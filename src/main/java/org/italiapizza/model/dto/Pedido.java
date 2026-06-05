@@ -18,7 +18,7 @@ public class Pedido {
     private LocalDateTime fechaPedido;
     private double montoTotal;
     private String estatus;          
-    private Integer idCliente;       // 'Integer' = permitir valores nulos
+    private Integer idCliente;       
     private int idEmpleado;
 
     private List<DetallePedido> detalles;

@@ -41,8 +41,6 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
     
-    // ========== Getters y Setters ==========
-    
     public int getIdUsuario() {
         return idUsuario;
     }

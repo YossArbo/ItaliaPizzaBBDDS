@@ -81,7 +81,7 @@ public class InventarioDAO {
     /**
      * Convertir/traducir datos de un formato a otro requerido
      * @param rs
-     * @return
+     * @return inv 
      * @throws SQLException 
      */
     private Inventario mapearReporte(ResultSet rs) throws SQLException {
