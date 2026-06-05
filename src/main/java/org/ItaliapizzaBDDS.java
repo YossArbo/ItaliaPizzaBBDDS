@@ -19,7 +19,7 @@ public class ItaliapizzaBDDS extends Application{
     @Override
     public void start(Stage stage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/GUI/Views/LoginView.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/org/italiapizza/view/LoginView.fxml"));
             
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -27,6 +27,7 @@ public class ItaliapizzaBDDS extends Application{
             stage.show();
 
         } catch (IOException e) {
+            e.printStackTrace();
             AlertManager.mostrarAlerta("Error", "Error: No se encontro la ventana principal Login", Alert.AlertType.ERROR);
         }
     }

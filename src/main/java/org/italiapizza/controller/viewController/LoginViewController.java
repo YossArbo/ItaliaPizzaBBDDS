@@ -20,7 +20,7 @@ public class LoginViewController {
     @FXML
     private TextField textFieldUsuario;
     @FXML
-    private PasswordField textFieldContrasenia;
+    private PasswordField passwordFieldContrasenia;
     @FXML
     private Button buttonLogin;
 
@@ -29,7 +29,7 @@ public class LoginViewController {
     @FXML
     private void handleLoginAction(ActionEvent event) {
         String usuario = textFieldUsuario.getText();
-        String pass = textFieldContrasenia.getText();
+        String pass = passwordFieldContrasenia.getText();
         
         try {
             Empleado empleado = loginController.autenticar(usuario, pass);
