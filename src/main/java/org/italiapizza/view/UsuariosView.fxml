@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
@@ -24,30 +25,34 @@
                   <Font name="Elephant" size="45.0" />
                </font>
             </Label>
-            <Button fx:id="buttonEmpleado" mnemonicParsing="false" prefHeight="33.0" prefWidth="167.0" style="-fx-background-color: grey;" text="Empleado" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <effect>
-                  <DropShadow>
-                     <color>
-                        <Color red="0.3607843220233917" green="0.2235294133424759" blue="0.1764705926179886" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Button>
-            <Button fx:id="buttonCliente" mnemonicParsing="false" prefHeight="40.0" prefWidth="167.0" style="-fx-background-color: grey;" text="Cliente" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <effect>
-                  <DropShadow>
-                     <color>
-                        <Color red="0.3607843220233917" green="0.2235294133424759" blue="0.1764705926179886" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Button>
+            <HBox alignment="CENTER" style="-fx-spacing: 50;">
+               <children>
+                  <Button fx:id="buttonEmpleado" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" style="-fx-background-color: #611818;" text="Empleado" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.3607843220233917" green="0.2235294133424759" blue="0.1764705926179886" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+                  <Button fx:id="buttonCliente" mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" style="-fx-background-color: grey;" text="Cliente" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.3607843220233917" green="0.2235294133424759" blue="0.1764705926179886" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

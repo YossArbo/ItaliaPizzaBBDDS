@@ -38,7 +38,7 @@ public class MenuPrincipalViewController implements Initializable {
         buttonCerrarSesion.setOnAction(this::cerrarSesion);
     }
 
-    private void cerrarSesion(ActionEvent event) {
+    public void cerrarSesion(ActionEvent event) {
         SessionManager.setEmpleadoActual(null);
         WindowManager.cambiarVista(event, "/org/italiapizza/view/LoginView.fxml", "Inicio de Sesión");
     }

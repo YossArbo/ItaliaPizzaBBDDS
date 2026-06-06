@@ -1,23 +1,26 @@
 package org.italiapizza.controller.viewController;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import org.italiapizza.model.dao.UsuarioDAO;
-import org.italiapizza.model.dto.Empleado;
-import org.italiapizza.utils.AlertManager;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.italiapizza.utils.WindowManager;
 
 public class RegistroUsuarioViewController implements Initializable {
 
-    @FXML
-    private Label labelRegistroUsuario;
     @FXML
     private TextField textFieldNombres;
     @FXML
@@ -33,31 +36,22 @@ public class RegistroUsuarioViewController implements Initializable {
     @FXML
     private Label labelNombreCompleto;
     @FXML
-    private Label labelTelefonos;
+    private VBox vboxTelefonos;
     @FXML
-    private Label labelTelefono1;
+    private VBox vboxEmails;
     @FXML
-    private Button buttonQuitarTelefono1;
-    @FXML
-    private Label labelEmails;
-    @FXML
-    private Label labelEmail1;
-    @FXML
-    private Button buttonQuitarEmail1;
-    @FXML
-    private Button buttonRegistrar;
+    private Button buttonSiguiente;
     @FXML
     private Button buttonCancelar;
 
-    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private List<String> telefonosList = new ArrayList<>();
+    private List<String> emailsList = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         buttonAgregarTelefono.setOnAction(e -> agregarTelefono());
-        buttonQuitarTelefono1.setOnAction(e -> quitarTelefono());
         buttonAgregarEmail.setOnAction(e -> agregarEmail());
-        buttonQuitarEmail1.setOnAction(e -> quitarEmail());
-        buttonRegistrar.setOnAction(this::guardarUsuarioEmpleado);
+        buttonSiguiente.setOnAction(this::irASeleccionTipo);
         buttonCancelar.setOnAction(this::regresar);
         
         textFieldNombres.textProperty().addListener((obs, oldVal, newVal) -> actualizarNombreCompleto());
@@ -69,47 +63,54 @@ public class RegistroUsuarioViewController implements Initializable {
     }
 
     private void agregarTelefono() {
-        if (!textFieldTelefono.getText().isEmpty()) {
-            labelTelefono1.setText(textFieldTelefono.getText());
+        String textoLimpio = textFieldTelefono.getText().replaceAll("[^\\d]", "");
+        if (textoLimpio.length() >= 10) {
+            String formato = textoLimpio.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "$1-$2-$3");
+            telefonosList.add(formato);
+            agregarElementoAVBox(vboxTelefonos, formato, telefonosList);
+            textFieldTelefono.clear();
         }
-    }
-
-    private void quitarTelefono() {
-        labelTelefono1.setText("");
     }
 
     private void agregarEmail() {
-        if (!textFieldEmail.getText().isEmpty()) {
-            labelEmail1.setText(textFieldEmail.getText());
+        String email = textFieldEmail.getText();
+        if (!email.isEmpty()) {
+            emailsList.add(email);
+            agregarElementoAVBox(vboxEmails, email, emailsList);
+            textFieldEmail.clear();
         }
     }
 
-    private void quitarEmail() {
-        labelEmail1.setText("");
+    private void agregarElementoAVBox(VBox vbox, String texto, List<String> lista) {
+        HBox hbox = new HBox(10);
+        hbox.setStyle("-fx-alignment: CENTER");
+        Label label = new Label(texto);
+        label.setStyle("-fx-font-size: 10px");
+        Button btnQuitar = new Button("⨉");
+        
+        btnQuitar.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-font-size: 8px; -fx-background-radius: 100;");
+        
+        btnQuitar.setOnAction(e -> {
+            lista.remove(texto);
+            vbox.getChildren().remove(hbox);
+        });
+        
+        hbox.getChildren().addAll(label, btnQuitar);
+        vbox.getChildren().add(hbox);
     }
 
-    private void guardarUsuarioEmpleado(ActionEvent event) {
-        if (textFieldNombres.getText().isEmpty() || textFieldApellidos.getText().isEmpty()) {
-            AlertManager.mostrarAlerta("Campos Vacíos", "Por favor llene los campos obligatorios.", Alert.AlertType.WARNING);
-            return;
-        }
-
+    private void irASeleccionTipo(ActionEvent event) {
         try {
-            Empleado empleado = new Empleado();
-            empleado.setNombres(textFieldNombres.getText());
-            empleado.setApellidos(textFieldApellidos.getText());
-            empleado.setTelefono(labelTelefono1.getText());
-            empleado.setEmail(labelEmail1.getText());
-            empleado.setTipoUsuario("Empleado");
-            empleado.setNombreUsuario(textFieldNombres.getText().toLowerCase() + "123");
-            empleado.setContrasena("Temporal123");
-            empleado.setRol("Cajero");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/italiapizza/view/UsuariosView.fxml"));
+            Parent root = loader.load();
             
-            usuarioDAO.registrarUsuario(empleado);
-            AlertManager.mostrarAlerta("Éxito", "Empleado registrado correctamente.", Alert.AlertType.INFORMATION);
-            WindowManager.cambiarVista(event, "/org/italiapizza/view/MenuUsuarioView.fxml", "Gestión de Usuarios");
+            UsuariosViewController controller = loader.getController();
+            controller.initData(textFieldNombres.getText(), textFieldApellidos.getText(), telefonosList, emailsList);
+            
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
         } catch (Exception e) {
-            AlertManager.mostrarAlerta("Error", e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 

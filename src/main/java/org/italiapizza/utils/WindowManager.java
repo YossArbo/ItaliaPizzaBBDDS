@@ -25,6 +25,7 @@ public class WindowManager {
             stage.show();
         } catch (IOException e) {
             AlertManager.mostrarAlerta("Error de Interfaz", "No se pudo cargar la vista.", Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 
@@ -38,6 +39,7 @@ public class WindowManager {
             stage.showAndWait();
         } catch (IOException e) {
             AlertManager.mostrarAlerta("Error de Interfaz", "No se pudo cargar la vista.", Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 }

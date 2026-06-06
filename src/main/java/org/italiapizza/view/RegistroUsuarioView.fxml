@@ -95,7 +95,7 @@
                               </ColorAdjust>
                            </effect>
                         </ImageView>
-                        <Label fx:id="labelNombreCompleto" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="170.0" text="Usuario" textFill="#360909" wrapText="true">
+                        <Label fx:id="labelNombreCompleto" alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="154.0" text="Nuevo Usuario" textFill="#360909" wrapText="true">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -105,39 +105,13 @@
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
                         </Label>
-                        <VBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="187.0" style="-fx-spacing: 1;">
-                           <children>
-                              <HBox alignment="CENTER" style="-fx-spacing: 5;">
-                                 <children>
-                                    <Label fx:id="labelTelefono1" text="228-000-0000" textFill="#360909" />
-                                    <Button fx:id="buttonQuitarTelefono1" mnemonicParsing="false" style="-fx-background-radius: 100; -fx-background-color: red;" text="⨉" textFill="WHITE">
-                                       <font>
-                                          <Font size="8.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
+                        <VBox fx:id="vboxTelefonos" alignment="TOP_CENTER" prefHeight="27.0" prefWidth="187.0" style="-fx-spacing: 1; -fx-alignment: TOP_LEFT;" />
                         <Label fx:id="labelEmails" alignment="CENTER" prefHeight="11.0" prefWidth="187.0" text="e-mail(s)" textFill="#360909">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
                         </Label>
-                        <VBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="187.0" style="-fx-spacing: 1;">
-                           <children>
-                              <HBox alignment="CENTER" style="-fx-spacing: 5;">
-                                 <children>
-                                    <Label fx:id="labelEmail1" alignment="CENTER" prefHeight="10.0" prefWidth="92.0" text="username@email" textFill="#360909" />
-                                    <Button fx:id="buttonQuitarEmail1" mnemonicParsing="false" style="-fx-background-radius: 100; -fx-background-color: red;" text="⨉" textFill="WHITE">
-                                       <font>
-                                          <Font size="8.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
+                        <VBox fx:id="vboxEmails" alignment="TOP_CENTER" prefHeight="29.0" prefWidth="187.0" style="-fx-spacing: 1;" />
                      </children>
                      <effect>
                         <DropShadow>
@@ -156,7 +130,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="buttonRegistrar" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="125.0" style="-fx-background-color: grey;" text="Registrar" textFill="WHITE">
+                  <Button fx:id="buttonSiguiente" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="125.0" style="-fx-background-color: grey;" text="Siguiente" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

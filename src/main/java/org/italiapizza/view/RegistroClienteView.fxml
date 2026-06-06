@@ -86,29 +86,13 @@
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
                         </Label>
-                        <VBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="187.0" style="-fx-spacing: 1;">
-                           <children>
-                              <HBox alignment="CENTER" style="-fx-spacing: 5;">
-                                 <children>
-                                    <Label fx:id="labelTelefono1" text="228-000-0000" textFill="#360909" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
+                        <VBox fx:id="vboxTelefonos" alignment="TOP_CENTER" prefHeight="27.0" prefWidth="187.0" style="-fx-spacing: 1;" />
                         <Label fx:id="labelEmails" alignment="CENTER" prefHeight="11.0" prefWidth="187.0" text="E-mail(s)" textFill="#360909">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
                         </Label>
-                        <VBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="187.0" style="-fx-spacing: 1;">
-                           <children>
-                              <HBox alignment="CENTER" style="-fx-spacing: 5;">
-                                 <children>
-                                    <Label fx:id="labelEmail1" alignment="CENTER" prefHeight="10.0" prefWidth="92.0" text="username@email" textFill="#360909" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
+                        <VBox fx:id="vboxEmails" alignment="TOP_CENTER" prefHeight="29.0" prefWidth="187.0" style="-fx-spacing: 1;" />
                         <Label fx:id="labelDireccion" text="Dirección" textFill="#360909">
                            <font>
                               <Font name="System Bold" size="12.0" />

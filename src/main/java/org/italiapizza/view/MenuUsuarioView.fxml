@@ -53,12 +53,13 @@
                      <children>
                         <ScrollPane prefHeight="255.0" prefWidth="542.0" style="-fx-background-color: white;">
                            <content>
-                              <TableView prefHeight="258.0" prefWidth="524.0" style="-fx-background-color: white;">
+                              <TableView fx:id="tableViewUsuarios" prefHeight="258.0" prefWidth="524.0" style="-fx-background-color: white;">
                                 <columns>
-                                  <TableColumn fx:id="tableColumnNombreCompleto" prefWidth="155.99999231100082" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Nombre Completo" />
-                                  <TableColumn fx:id="tableColumnTelefono" minWidth="8.799957275390625" prefWidth="116.00003051757812" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Teléfono" />
-                                    <TableColumn fx:id="tableColumnEmail" prefWidth="160.0" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="E-mail" />
-                                    <TableColumn fx:id="tableColumnTipoUsuario" minWidth="0.0" prefWidth="100.79998779296875" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Tipo" />
+                                  <TableColumn fx:id="tableColumnNombreCompleto" prefWidth="158.4000169634819" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Nombre Completo" />
+                                  <TableColumn fx:id="tableColumnTelefono" minWidth="8.799957275390625" prefWidth="86.40000915527344" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Teléfono" />
+                                    <TableColumn fx:id="tableColumnEmail" prefWidth="119.19996643066406" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="E-mail" />
+                                    <TableColumn fx:id="tableColumnTipoUsuario" minWidth="0.0" prefWidth="82.4000244140625" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Tipo" />
+                                    <TableColumn fx:id="tableColumnEstatus" prefWidth="79.199951171875" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Estado" />
                                 </columns>
                               </TableView>
                            </content>
@@ -67,18 +68,6 @@
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="185.0" prefWidth="230.0" style="-fx-spacing: 50;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Button fx:id="buttonEditar" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #ae8672;" text="Editar" textFill="WHITE">
-                           <effect>
-                              <DropShadow>
-                                 <color>
-                                    <Color red="0.31578946113586426" green="0.10526315867900848" blue="0.10526315867900848" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Button>
                         <Button fx:id="buttonEliminar" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: ac2020;" text="Eliminar" textFill="WHITE">
                            <effect>
                               <DropShadow>

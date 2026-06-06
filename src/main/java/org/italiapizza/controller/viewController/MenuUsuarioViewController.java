@@ -46,6 +46,8 @@ public class MenuUsuarioViewController implements Initializable {
     private Button buttonVolverAlMenu;
     @FXML
     private Button buttonRegresar;
+    @FXML
+    private TableColumn<Usuario, String> tableColumnEstatus;
 
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
     private ObservableList<Usuario> usuariosObservable;
@@ -59,8 +61,8 @@ public class MenuUsuarioViewController implements Initializable {
 
         buttonNuevoUsuario.setOnAction(e -> abrirModalNuevoUsuario());
         buttonEliminar.setOnAction(e -> eliminarUsuario());
-        buttonRegresar.setOnAction(e -> WindowManager.cambiarVista(e, "/org/italiapizza/view/Administracion.fxml", "Administración"));
-        buttonVolverAlMenu.setOnAction(e -> WindowManager.cambiarVista(e, "/org/italiapizza/view/MenuPrincipal.fxml", "Menú Principal"));
+        buttonRegresar.setOnAction(e -> WindowManager.cambiarVista(e, "/org/italiapizza/view/AdministracionView.fxml", "Administración"));
+        buttonVolverAlMenu.setOnAction(e -> WindowManager.cambiarVista(e, "/org/italiapizza/view/MenuPrincipalView.fxml", "Menú Principal"));
     }
 
     private void configurarColumnas() {
@@ -68,20 +70,33 @@ public class MenuUsuarioViewController implements Initializable {
         tableColumnTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         tableColumnTipoUsuario.setCellValueFactory(new PropertyValueFactory<>("tipoUsuario"));
+
+        tableColumnEstatus.setCellValueFactory(cellData -> {
+            int estatus = cellData.getValue().getEstatus();
+            String estadoTexto = (estatus == 1) ? "Activo" : "Inactivo";
+            return new javafx.beans.property.SimpleStringProperty(estadoTexto);
+        });
     }
 
     private void cargarUsuarios(String busqueda) {
+        if (busqueda == null || busqueda.trim().length() < 2) {
+            if (usuariosObservable != null) {
+                usuariosObservable.clear();
+            }
+            return;
+        }
         try {
-            List<Usuario> lista = usuarioDAO.buscarPorNombre(busqueda);
+            List<Usuario> lista = usuarioDAO.buscarUsuariosParaConsulta(busqueda);
             usuariosObservable = FXCollections.observableArrayList(lista);
             tableViewUsuarios.setItems(usuariosObservable);
         } catch (Exception e) {
             AlertManager.mostrarAlerta("Error", "No se pudo cargar la lista de usuarios.", Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 
     private void abrirModalNuevoUsuario() {
-        WindowManager.abrirModal("/org/italiapizza/view/RegistroUsuario.fxml", "Registrar Usuario");
+        WindowManager.abrirModal("/org/italiapizza/view/RegistroUsuarioView.fxml", "Registrar Usuario");
         cargarUsuarios(textFieldBuscadorUsuario.getText());
     }
 
