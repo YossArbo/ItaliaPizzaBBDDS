@@ -81,16 +81,27 @@ public final class ExportadorCSV {
         }
 
         String[] encabezados = {
-                "ID Pedido", "Fecha", "ID Cliente", "ID Empleado", "Estatus", "Monto Total"
+                "ID Pedido", "Fecha", "Cliente", "Atendido Por (Empleado)", "Estatus", "Monto Total"
         };
 
         List<String[]> filas = new ArrayList<>();
         for (Pedido p : pedidos) {
+            
+            String nombreCliente = "Publico en General";
+            if (p.getCliente() != null && p.getCliente().getNombres() != null) {
+                nombreCliente = p.getCliente().getNombres() + " " + p.getCliente().getApellidos();
+            }
+            
+            String nombreEmpleado = "Desconocido";
+            if (p.getEmpleado() != null && p.getEmpleado().getNombres() != null) {
+                nombreEmpleado = p.getEmpleado().getNombres() + " " + p.getEmpleado().getApellidos();
+            }
+            
             filas.add(new String[]{
                     String.valueOf(p.getIdPedido()),
                     formatearFecha(p.getFechaPedido()),
-                    p.getIdCliente() != null ? String.valueOf(p.getIdCliente()) : "",
-                    String.valueOf(p.getIdEmpleado()),
+                    nombreCliente.trim(),
+                    nombreEmpleado.trim(),
                     p.getEstatus(),
                     formatearNumero(p.getMontoTotal())
             });

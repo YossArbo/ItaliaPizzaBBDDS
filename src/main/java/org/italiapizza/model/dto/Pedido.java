@@ -18,8 +18,8 @@ public class Pedido {
     private LocalDateTime fechaPedido;
     private double montoTotal;
     private String estatus;          
-    private Integer idCliente;       
-    private int idEmpleado;
+    private Cliente cliente;       
+    private Empleado empleado;
 
     private List<DetallePedido> detalles;
 
@@ -32,13 +32,13 @@ public class Pedido {
     }
 
     public Pedido(int idPedido, LocalDateTime fechaPedido, double montoTotal,
-                  String estatus, Integer idCliente, int idEmpleado) {
+                  String estatus, Cliente cliente, Empleado empleado) {
         this.idPedido = idPedido;
         this.fechaPedido = fechaPedido;
         this.montoTotal = montoTotal;
         this.estatus = estatus;
-        this.idCliente = idCliente;
-        this.idEmpleado = idEmpleado;
+        this.cliente = cliente;
+        this.empleado = empleado;
         this.detalles = new ArrayList<>();
     }
 
@@ -54,11 +54,11 @@ public class Pedido {
     public String getEstatus() { return estatus; }
     public void setEstatus(String estatus) { this.estatus = estatus; }
 
-    public Integer getIdCliente() { return idCliente; }
-    public void setIdCliente(Integer idCliente) { this.idCliente = idCliente; }
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
 
-    public int getIdEmpleado() { return idEmpleado; }
-    public void setIdEmpleado(int idEmpleado) { this.idEmpleado = idEmpleado; }
+    public Empleado getEmpleado() { return empleado; }
+    public void setEmpleado(Empleado empleado) { this.empleado = empleado; }
 
     public List<DetallePedido> getDetalles() { return detalles; }
     public void setDetalles(List<DetallePedido> detalles) { this.detalles = detalles; }

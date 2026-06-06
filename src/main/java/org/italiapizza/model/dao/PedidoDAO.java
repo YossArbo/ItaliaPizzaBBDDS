@@ -148,41 +148,53 @@ public class PedidoDAO {
      * @return
      * @throws PedidoException 
      */
-    public List<Pedido> buscarPedidos(Integer idCliente, String fecha, String estatus) throws PedidoException {
+    public List<Pedido> buscarPedidos(Integer idCliente, LocalDate desde, LocalDate hasta, String estatus) throws PedidoException {
         List<Pedido> lista = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT * FROM pedido WHERE 1=1 ");
+        StringBuilder sql = new StringBuilder(
+                "SELECT p.id_pedido, p.fecha_pedido, p.monto_total, p.estatus, " +
+                "p.id_cliente, uc.nombres AS nombre_cliente, uc.apellidos AS apellido_cliente, " +
+                "p.id_empleado, ue.nombres AS nombre_empleado, ue.apellidos AS apellido_empleado " +
+                "FROM pedido p " +
+                "LEFT JOIN usuario uc ON p.id_cliente = uc.id_usuario " +
+                "JOIN usuario ue ON p.id_empleado = ue.id_usuario " +   
+                "WHERE 1=1 ");
+       
         List<Object> parametros = new ArrayList<>();
 
         if (idCliente != null && idCliente > 0) {
             sql.append("AND id_cliente = ? ");
             parametros.add(idCliente);
-        }
-        if (fecha != null && !fecha.trim().isEmpty()) {
-            sql.append("AND DATE(fecha_pedido) = ? "); 
-            parametros.add(fecha);
-        }
-        if (estatus != null && !estatus.trim().isEmpty()) {
-            sql.append("AND LOWER(estatus) = LOWER(?) ");
-            parametros.add(estatus);
-        }
-
-        MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
-        try {
-            conn.conectarSegunUsuarioActivo();
-            try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
-                for (int i = 0; i < parametros.size(); i++) {
-                    ps.setObject(i + 1, parametros.get(i));
-                }
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        lista.add(mapearPedido(rs));
+       
+            if (desde != null && hasta != null) {
+                sql.append("AND p.fecha_pedido >= ? AND p.fecha_pedido < = ? "); 
+                parametros.add(Timestamp.valueOf(desde.atStartOfDay()));
+                parametros.add(Timestamp.valueOf(hasta.plusDays(1).atStartOfDay()));
+            }
+            if (estatus != null && !estatus.trim().isEmpty()) {
+                sql.append("AND LOWER(estatus) = LOWER(?) ");
+                parametros.add(estatus);
+            }
+        
+            sql.append("ORDER BY p.fecha_pedido DESC");
+            
+            MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
+            try {
+                conn.conectarSegunUsuarioActivo();
+                try (PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+                    for (int i = 0; i < parametros.size(); i++) {
+                        ps.setObject(i + 1, parametros.get(i));
+                    }
+                    try (ResultSet rs = ps.executeQuery()) {
+                        while (rs.next()) {
+                            lista.add(mapearPedido(rs));
+                        }
                     }
                 }
+            } catch (SQLException e) {
+                throw new PedidoException("Error al buscar pedidos: " + e.getMessage(), e);
+            } finally {
+                try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
             }
-        } catch (SQLException e) {
-            throw new PedidoException("Error al buscar pedidos: " + e.getMessage(), e);
-        } finally {
-            try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
         return lista;
     }
@@ -205,10 +217,33 @@ public class PedidoDAO {
     }
 
     private Pedido mapearPedido(ResultSet rs) throws SQLException {
-        Timestamp ts = rs.getTimestamp("fecha_pedido");
-        return new Pedido(rs.getInt("id_pedido"), ts != null ? ts.toLocalDateTime() : null,
-                rs.getDouble("monto_total"), rs.getString("estatus"),
-                (Integer) rs.getObject("id_cliente"), rs.getInt("id_empleado"));
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido(rs.getInt("id_pedido"));
+        if (rs.getTimestamp("fecha_pedido") != null){
+            pedido.setFechaPedido(rs.getTimestamp("fecha_pedido").toLocalDateTime());
+        }
+        pedido.setMontoTotal(rs.getDouble("monto_total"));
+        pedido.setEstatus(rs.getString("estatus"));
+        
+        Cliente cliente = new Cliente();
+        int idCliente = rs.getInt("id_cliente");
+        if(!rs.wasNull()) {
+            cliente.setIdUsuario(idCliente);
+            cliente.setNombres(rs.getString("nombre_cliente"));
+            cliente.setApellidos(rs.getString("apellido_cliente"));
+        } else {
+            cliente.setNombres("Publico en General");
+            cliente.setApellidos("");
+        }
+        
+        pedido.setCliente(cliente);
+        
+        Empleado empleado = new Empleado();
+        empleado.setIdUsuario(rs.getInt("id_empleado"));
+        empleado.setNombres(rs.getString("nombre_empleado"));
+        pedido.setEmpleado(empleado);
+        
+        return pedido;
     }
     
     
