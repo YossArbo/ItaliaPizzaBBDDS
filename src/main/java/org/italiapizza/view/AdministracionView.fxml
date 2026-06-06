@@ -27,14 +27,14 @@
                   <Font name="Elephant" size="45.0" />
                </font>
             </Label>
-            <GridPane alignment="CENTER" prefHeight="154.0" prefWidth="600.0">
+            <GridPane alignment="CENTER" prefHeight="110.0" prefWidth="600.0">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="344.39996337890625" minWidth="10.0" prefWidth="200.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="285.20001220703125" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints maxHeight="137.60002593994142" minHeight="72.79998779296875" prefHeight="72.8" valignment="CENTER" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="128.0" minHeight="63.199974060058594" prefHeight="128.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="137.60002593994142" minHeight="52.80000381469726" prefHeight="60.00001602172851" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="128.0" minHeight="63.199974060058594" prefHeight="76.79998397827147" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
                   <Button fx:id="buttonUsuarios" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: grey;" text="Usuarios" textFill="WHITE">
@@ -61,7 +61,7 @@
                         </DropShadow>
                      </effect>
                   </Button>
-                  <Button fx:id="buttonNegocio" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: grey;" text="Negocio" textFill="WHITE" GridPane.rowIndex="1">
+                  <Button fx:id="buttonNegocio" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: grey;" text="Negocio" textFill="WHITE" visible="false" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="25.0" />
                      </font>
@@ -73,7 +73,7 @@
                         </DropShadow>
                      </effect>
                   </Button>
-                  <Button fx:id="buttonAcercaDe" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: grey;" text="Acerca de" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Button fx:id="buttonAcercaDe" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: grey;" text="Acerca de" textFill="WHITE" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="25.0" />
                      </font>

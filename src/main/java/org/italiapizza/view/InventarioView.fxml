@@ -51,7 +51,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="282.0" prefWidth="142.0" style="-fx-spacing: 50;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Button fx:id="buttonEditar" mnemonicParsing="false" onAction="#abrirModalEditarProducto" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #ae8672;" text="Editar" textFill="WHITE">
+                        <Button fx:id="buttonEditar" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #ae8672;" text="Editar" textFill="WHITE">
                            <effect>
                               <DropShadow>
                                  <color>
@@ -103,19 +103,20 @@
                   </TextField>
                   <ScrollPane prefHeight="259.0" prefWidth="618.0" style="-fx-background-color: white;" GridPane.rowIndex="1">
                      <content>
-                        <TableView prefHeight="258.0" prefWidth="671.0" style="-fx-background-color: white;">
+                        <TableView fx:id="tableViewInventario" prefHeight="258.0" prefWidth="671.0" style="-fx-background-color: white;">
                            <columns>
-                              <TableColumn fx:id="tableColumnCodigo" prefWidth="72.80000323057175" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Código" />
-                              <TableColumn fx:id="tableColumnNombre" minWidth="8.799957275390625" prefWidth="135.19995880126953" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Nombre Producto" />
-                              <TableColumn fx:id="tableColumnDescripcion" prefWidth="179.99996948242188" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Descripción" />
-                              <TableColumn fx:id="tableColumnPrecio" minWidth="0.0" prefWidth="56.799957275390625" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Precio" />
-                              <TableColumn fx:id="tableColumnRestricciones" prefWidth="184.79995727539062" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Restricciones" />
-                              <TableColumn fx:id="tableColumnUnidadMedida" prefWidth="184.79995727539062" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Unidad Medida" />
+                              <TableColumn fx:id="tableColumnCodigo" prefWidth="55.99999636411667" style="-fx-background-color: #ffe8dd; -fx-border-color: green; -fx-border-width: 0.5;" text="Código" />
+                              <TableColumn fx:id="tableColumnNombre" minWidth="8.799957275390625" prefWidth="116.80001449584961" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Nombre Producto" />
+                              <TableColumn fx:id="tableColumnDescripcion" prefWidth="104.80007934570312" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Descripción" />
+                              <TableColumn fx:id="tableColumnPrecio" minWidth="0.0" prefWidth="64.0" style="-fx-background-color: #ffe8dd; -fx-border-color: orange; -fx-border-width: 0.5;" text="Precio" />
+                              <TableColumn fx:id="tableColumnRestricciones" prefWidth="99.20001220703125" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Restricciones" visible="false" />
+                              <TableColumn fx:id="tableColumnUnidadMedida" prefWidth="73.60003662109375" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Unidad Medida" />
+                              <TableColumn fx:id="tableColumnCantidadSistema" prefWidth="81.5999755859375" style="-fx-background-color: #ffe8dd; -fx-border-color: blue; -fx-border-width: 0.5;" text="Cantidad" />
                            </columns>
                         </TableView>
                      </content>
                   </ScrollPane>
-                  <Button fx:id="buttonNuevoProducto" mnemonicParsing="false" onAction="#abrirModalNuevoProducto" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: grey;" text="+Nuevo Producto" textFill="WHITE" GridPane.columnIndex="1">
+                  <Button fx:id="buttonNuevoProducto" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: grey;" text="+Nuevo Producto" textFill="WHITE" GridPane.columnIndex="1">
                      <effect>
                         <DropShadow>
                            <color>

@@ -85,12 +85,12 @@
                      <children>
                         <ComboBox fx:id="comboBoxTipoProducto" prefHeight="29.6" prefWidth="150.0" promptText="Tipo Producto" style="-fx-background-color: #ffe8dd; -fx-text-fill: white; -fx-prompt-text-fill: white; -fx-font-family: Segoe UI Semibold;" />
                         <ComboBox fx:id="comboBoxUnidadMedida" prefHeight="29.6" prefWidth="150.0" promptText="Unidad de medida" style="-fx-background-color: #ffe8dd; -fx-text-fill: white; -fx-prompt-text-fill: white;" />
-                        <Button fx:id="buttonSeleccionarFoto" mnemonicParsing="false" prefHeight="29.6" style="-fx-background-color: #ffe8dd;" text="Seleccionar Foto">
+                        <Button fx:id="buttonSeleccionarFoto" mnemonicParsing="false" prefHeight="29.6" style="-fx-background-color: #ffe8dd;" text="Seleccionar Foto" visible="false">
                            <font>
                               <Font name="Segoe UI Semibold" size="12.0" />
                            </font>
                         </Button>
-                        <TextField fx:id="textFieldUrlFoto" prefHeight="29.6" prefWidth="134.0" promptText="URL imagen" style="-fx-background-color: #ae8672; -fx-text-fill: white; -fx-prompt-text-fill: white;">
+                        <TextField fx:id="textFieldUrlFoto" prefHeight="29.6" prefWidth="134.0" promptText="URL imagen" style="-fx-background-color: #ae8672; -fx-text-fill: white; -fx-prompt-text-fill: white;" visible="false">
                            <font>
                               <Font name="Segoe UI Semibold" size="12.0" />
                            </font>

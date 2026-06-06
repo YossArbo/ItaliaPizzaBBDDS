@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -52,30 +53,23 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="282.0" prefWidth="142.0" style="-fx-spacing: 50;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Button fx:id="buttonEditar" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #ae8672;" text="Editar" textFill="WHITE">
-                           <effect>
-                              <DropShadow>
-                                 <color>
-                                    <Color red="0.31578946113586426" green="0.10526315867900848" blue="0.10526315867900848" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="buttonCambiarEstatus" mnemonicParsing="false" prefHeight="55.0" prefWidth="100.0" style="-fx-background-color: ac2020;" text="Cambiar estatus" textFill="WHITE" wrapText="true">
-                           <effect>
-                              <DropShadow>
-                                 <color>
-                                    <Color red="0.31578946113586426" green="0.10526315867900848" blue="0.10526315867900848" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Button>
+                        <VBox style="-fx-spacing: 5;">
+                           <children>
+                              <Button fx:id="buttonCambiarEstatus" mnemonicParsing="false" prefHeight="55.0" prefWidth="100.0" style="-fx-background-color: ac2020;" text="Cambiar estatus" textFill="WHITE" wrapText="true">
+                                 <effect>
+                                    <DropShadow>
+                                       <color>
+                                          <Color red="0.31578946113586426" green="0.10526315867900848" blue="0.10526315867900848" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Button>
+                              <ComboBox fx:id="comboBoxCambiarEstatus" prefHeight="38.0" prefWidth="142.0" promptText="Asignar Estatus" style="-fx-background-color: #ffe8dd;" />
+                           </children>
+                        </VBox>
                         <Button fx:id="buttonBitacora" mnemonicParsing="false" prefHeight="34.0" prefWidth="115.0" style="-fx-background-color: grey;" text="Bitácora" textFill="WHITE">
                            <effect>
                               <DropShadow>
@@ -99,30 +93,29 @@
                   </VBox>
                   <HBox alignment="CENTER_LEFT" style="-fx-spacing: 10;">
                      <children>
-                        <TextField fx:id="textFieldBuscadorPedido" prefHeight="30.0" prefWidth="299.0" promptText="Código / Nombre" style="-fx-background-color: #ae8672; -fx-text-fill: white; -fx-prompt-text-fill: white; -fx-background-radius: 5;" text="Código/ Cliente / Cajero">
+                        <TextField fx:id="textFieldBuscadorPedido" prefHeight="30.0" prefWidth="299.0" promptText="Código/Cliente/Cajero" style="-fx-background-color: #ae8672; -fx-text-fill: white; -fx-prompt-text-fill: white; -fx-background-radius: 5;">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </TextField>
-                        <TextField fx:id="textFieldFecha" prefHeight="50.0" promptText="Fecha" />
-                        <ComboBox fx:id="comboBoxEstatus" prefHeight="50.0" prefWidth="150.0" promptText="Estatus" />
+                        <DatePicker fx:id="datePickerFecha" promptText="Fecha" style="-fx-background-color: #ffe8dd;" visible="false" />
+                        <ComboBox fx:id="comboBoxEstatus" prefHeight="50.0" prefWidth="150.0" promptText="Estatus" style="-fx-background-color: #ffe8dd;" />
                      </children>
                   </HBox>
                   <ScrollPane prefHeight="259.0" prefWidth="618.0" style="-fx-background-color: white;" GridPane.rowIndex="1">
                      <content>
                         <TableView fx:id="tableViewPedidos" prefHeight="258.0" prefWidth="679.0" style="-fx-background-color: white;">
                            <columns>
-                              <TableColumn fx:id="tableColumnCodigo" prefWidth="72.80000323057175" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Código" />
-                              <TableColumn fx:id="tableColumnNombre" minWidth="8.799957275390625" prefWidth="135.19995880126953" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Cliente" />
-                              <TableColumn fx:id="tableColumnDescripcion" prefWidth="124.00003051757812" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Cajero" />
-                              <TableColumn fx:id="tableColumnPrecio" minWidth="0.0" prefWidth="101.5999755859375" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Monto Total" />
-                              <TableColumn fx:id="tableColumnRestricciones" prefWidth="82.4000244140625" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Estatus" />
-                              <TableColumn fx:id="tableColumnUnidadMedida" prefWidth="150.0" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Contenido" />
+                              <TableColumn fx:id="tableColumnIdPedido" prefWidth="88.000015437603" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Código" />
+                              <TableColumn fx:id="tableColumnCliente" minWidth="8.799957275390625" prefWidth="167.9999771118164" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Cliente" />
+                              <TableColumn fx:id="tableColumnCajero" prefWidth="125.5999755859375" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Cajero" />
+                              <TableColumn fx:id="tableColumnMontoTotal" minWidth="0.0" prefWidth="99.20004272460938" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Monto Total" />
+                              <TableColumn fx:id="tableColumnEstatus" prefWidth="116.80001831054688" style="-fx-background-color: #ffe8dd; -fx-border-color: #6e2a44; -fx-border-width: 0.5;" text="Estatus" />
                            </columns>
                         </TableView>
                      </content>
                   </ScrollPane>
-                  <Button fx:id="buttonNuevoProducto" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: grey;" text="+Nuevo Producto" textFill="WHITE" GridPane.columnIndex="1">
+                  <Button fx:id="buttonNuevoPedido" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: grey;" text="+NuevoPedido" textFill="WHITE" GridPane.columnIndex="1">
                      <effect>
                         <DropShadow>
                            <color>

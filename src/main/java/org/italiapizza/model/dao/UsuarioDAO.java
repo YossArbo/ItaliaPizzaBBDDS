@@ -691,4 +691,61 @@ public class UsuarioDAO {
         }
         return null;
     }
+
+    public List<Cliente> obtenerTodosLosClientes() throws RegistroUsuarioException {
+        List<Cliente> lista = new ArrayList<>();
+        MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
+        try {
+            conn.connectionAdmin();
+            String sql = "SELECT id_usuario, nombres, apellidos, estatus FROM usuario WHERE tipo_usuario = 'Cliente' AND estatus = 1 ORDER BY nombres";
+            try (java.sql.PreparedStatement ps = conn.prepareStatement(sql); java.sql.ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Cliente c = new Cliente();
+                    c.setIdUsuario(rs.getInt("id_usuario"));
+                    c.setNombres(rs.getString("nombres"));
+                    c.setApellidos(rs.getString("apellidos"));
+                    c.setEstatus(rs.getInt("estatus"));
+                    lista.add(c);
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            throw new RegistroUsuarioException("Error al cargar clientes: " + e.getMessage(), e);
+        } finally {
+            try {
+                conn.close();
+            } catch (java.sql.SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return lista;
+    }
+
+
+    public List<Empleado> obtenerTodosLosEmpleados() throws RegistroUsuarioException {
+        List<Empleado> lista = new ArrayList<>();
+        MySQLConnectionManager conn = MySQLConnectionManager.getInstance();
+        try {
+            conn.connectionAdmin();
+            String sql = "SELECT u.id_usuario, u.nombres, u.apellidos, u.estatus, e.nombre_usuario, e.rol "
+                    + "FROM usuario u JOIN empleado e ON u.id_usuario = e.id_usuario WHERE u.estatus = 1 ORDER BY u.nombres";
+            try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Empleado emp = new Empleado(
+                            rs.getInt("id_usuario"), rs.getString("nombres"), rs.getString("apellidos"),
+                            null, null, rs.getInt("estatus"), rs.getString("nombre_usuario"), rs.getString("rol")
+                    );
+                    lista.add(emp);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RegistroUsuarioException("Error al cargar empleados: " + e.getMessage(), e);
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return lista;
+    }
 }

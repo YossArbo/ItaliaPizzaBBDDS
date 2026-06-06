@@ -73,7 +73,7 @@
                         </DropShadow>
                      </effect>
                   </Button>
-                  <Button fx:id="buttonAyuda" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: grey;" text="Ayuda" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Button fx:id="buttonInfo" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: grey;" text="Info" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="25.0" />
                      </font>
